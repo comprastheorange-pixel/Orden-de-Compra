@@ -84,7 +84,16 @@ if menu == "➕ Crear Nueva Orden de Compra":
 
     col_p1, col_p2, col_p3 = st.columns(3)
     with col_p1:
-        fruta = st.selectbox("Fruta / Insumo", ["MARACUYA", "MANGO", "MORA", "LULO", "GUANABANA", "LIMON", "NARANJA", "PIÑA", "PULPA DE FRUTA", "OTRA"])
+        # Selector de fruta con opción "OTRA" optimizada
+        opciones_fruta = ["MARACUYA", "MANGO", "MORA", "LULO", "GUANABANA", "LIMON", "NARANJA", "PIÑA", "PULPA DE FRUTA", "OTRA"]
+        fruta_seleccionada = st.selectbox("Fruta / Insumo", opciones_fruta, key="select_fruta_oc")
+        
+        if fruta_seleccionada == "OTRA":
+            fruta_custom = st.text_input("Especifica el nombre de la fruta", placeholder="Ej: FEIJOA", key="input_otra_fruta_oc")
+            fruta = fruta_custom.strip().upper() if fruta_custom else "OTRA (Sin especificar)"
+        else:
+            fruta = fruta_seleccionada
+
         calidad = st.selectbox("Calidad / Presentación", ["Primera", "Segunda", "Industrial / Pulpa", "Estandar"])
     with col_p2:
         cantidad_kg = st.number_input("Cantidad Solicitada (Kg)", min_value=1.0, value=1000.0, step=50.0)
